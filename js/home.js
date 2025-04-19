@@ -22,12 +22,6 @@ async function fetchTrendingAnime() {
   return allResults;
 }
 
-function displayBanner(item) {
-  const banner = document.getElementById('banner');
-  banner.style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
-  document.getElementById('banner-title').textContent = item.title || item.name;
-}
-
 function displayList(items, containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = '';
@@ -42,16 +36,17 @@ function displayList(items, containerId) {
 
 function showDetails(item) {
   currentItem = item;
-  // Clear the description and image when showing the player
+
+  // Clear previous modal content
   document.getElementById('modal-title').textContent = item.title || item.name;
-  document.getElementById('modal-description').textContent = ''; // Clear description
-  document.getElementById('modal-image').style.display = 'none'; // Hide image
-  document.getElementById('modal-rating').innerHTML = ''; // Clear rating
-  changeServer();
-  
-  // Show the player iframe
+  document.getElementById('modal-description').textContent = item.overview || "No description available.";
+  document.getElementById('modal-image').src = `${IMG_URL}${item.poster_path}`;
+  document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(item.vote_average / 2));
+
+  // Show video iframe
   document.getElementById('modal-video').style.display = 'block';
-  
+  changeServer();
+
   // Display the modal
   document.getElementById('modal').style.display = 'flex';
 }
@@ -69,84 +64,27 @@ function changeServer() {
     embedURL = `https://player.videasy.net/${type}/${currentItem.id}`;
   }
 
-  // Set the embed URL for the video iframe
-  document.getElementById('modal-video').src = embedURL;
+  const iframe = document.getElementById('modal-video');
+  iframe.src = embedURL;
 }
 
 function closeModal() {
-  // Hide the modal and reset the iframe source to stop the video
+  // Hide the modal and reset iframe
   document.getElementById('modal').style.display = 'none';
-  document.getElementById('modal-video').src = ''; // Stop video from playing
-  document.getElementById('modal-video').style.display = 'none'; // Hide video iframe
-  document.getElementById('modal-image').style.display = 'block'; // Show image back
-  document.getElementById('modal-description').textContent = currentItem.overview; // Show description again
-  document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(currentItem.vote_average / 2)); // Show rating
-}
-
-
-function openSearchModal() {
-  document.getElementById('search-modal').style.display = 'flex';
-  document.getElementById('search-input').focus();
-}
-
-function closeSearchModal() {
-  document.getElementById('search-modal').style.display = 'none';
-  document.getElementById('search-results').innerHTML = '';
-}
-
-async function searchTMDB() {
-  const query = document.getElementById('search-input').value.trim();
-  if (!query) {
-    document.getElementById('search-results').innerHTML = '';
-    return;
-  }
-
-  const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
-  const data = await res.json();
-  const container = document.getElementById('search-results');
-  container.innerHTML = '';
-
-  data.results.forEach(item => {
-    if (!item.poster_path) return;
-    const img = document.createElement('img');
-    img.src = `${IMG_URL}${item.poster_path}`;
-    img.alt = item.title || item.name;
-    img.onclick = () => {
-      closeSearchModal();
-      showDetails(item);
-    };
-    container.appendChild(img);
-  });
+  document.getElementById('modal-video').src = ''; // Stop video
+  document.getElementById('modal-video').style.display = 'none'; // Hide iframe
 }
 
 async function init() {
+  // Fetch trending movies, TV shows, and anime
   const movies = await fetchTrending('movie');
   const tvShows = await fetchTrending('tv');
   const anime = await fetchTrendingAnime();
 
-  displayBanner(movies[Math.floor(Math.random() * movies.length)]);
+  // Display the lists of movies, TV shows, and anime
   displayList(movies, 'movies-list');
   displayList(tvShows, 'tvshows-list');
   displayList(anime, 'anime-list');
-  
-  // Initialize Arrow Functionality
-  addArrowFunctionality('movies-list', 'left-arrow-movies', 'right-arrow-movies');
-  addArrowFunctionality('tvshows-list', 'left-arrow-tvshows', 'right-arrow-tvshows');
-  addArrowFunctionality('anime-list', 'left-arrow-anime', 'right-arrow-anime');
-}
-
-function addArrowFunctionality(listId, leftArrowId, rightArrowId) {
-  const list = document.getElementById(listId);
-  const leftArrow = document.getElementById(leftArrowId);
-  const rightArrow = document.getElementById(rightArrowId);
-
-  leftArrow.addEventListener('click', () => {
-    list.scrollBy({ left: -150, behavior: 'smooth' });
-  });
-
-  rightArrow.addEventListener('click', () => {
-    list.scrollBy({ left: 150, behavior: 'smooth' });
-  });
 }
 
 init();
