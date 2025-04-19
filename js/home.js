@@ -42,6 +42,10 @@ function displayList(items, containerId) {
 
 function showDetails(item) {
   currentItem = item;
+  document.getElementById('modal-title').textContent = item.title || item.name;
+  document.getElementById('modal-description').textContent = item.overview;
+  document.getElementById('modal-image').src = `${IMG_URL}${item.poster_path}`;
+  document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(item.vote_average / 2));
   changeServer();
   document.getElementById('modal').style.display = 'flex';
 }
@@ -59,8 +63,7 @@ function changeServer() {
     embedURL = `https://player.videasy.net/${type}/${currentItem.id}`;
   }
 
-  const videoFrame = document.getElementById('modal-video');
-  videoFrame.src = embedURL;
+  document.getElementById('modal-video').src = embedURL;
 }
 
 function closeModal() {
@@ -112,6 +115,25 @@ async function init() {
   displayList(movies, 'movies-list');
   displayList(tvShows, 'tvshows-list');
   displayList(anime, 'anime-list');
+  
+  // Initialize Arrow Functionality
+  addArrowFunctionality('movies-list', 'left-arrow-movies', 'right-arrow-movies');
+  addArrowFunctionality('tvshows-list', 'left-arrow-tvshows', 'right-arrow-tvshows');
+  addArrowFunctionality('anime-list', 'left-arrow-anime', 'right-arrow-anime');
+}
+
+function addArrowFunctionality(listId, leftArrowId, rightArrowId) {
+  const list = document.getElementById(listId);
+  const leftArrow = document.getElementById(leftArrowId);
+  const rightArrow = document.getElementById(rightArrowId);
+
+  leftArrow.addEventListener('click', () => {
+    list.scrollBy({ left: -150, behavior: 'smooth' });
+  });
+
+  rightArrow.addEventListener('click', () => {
+    list.scrollBy({ left: 150, behavior: 'smooth' });
+  });
 }
 
 init();
