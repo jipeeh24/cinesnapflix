@@ -138,15 +138,38 @@
       background: rgba(0, 0, 0, 0.9);
       z-index: 1000;
       flex-direction: column;
-      padding: 2rem;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 3rem 1rem;
       overflow-y: auto;
+    }
+
+    .search-modal .close {
+      align-self: flex-end;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    #search-input {
+      width: 100%;
+      max-width: 500px;
+      padding: 0.75rem 1rem;
+      border-radius: 25px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background-color: #2a2a2a;
+      color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
     #search-results {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-top: 1rem;
+      margin-top: 2rem;
+      justify-content: center;
     }
 
     #search-results img {
@@ -165,7 +188,7 @@
 <body>
   <!-- Navbar -->
   <div class="navbar">
-    <img src="Cinesnapflix.png" alt="LOGO" />
+    <img src="logo.png" alt="LOGO" />
     <div class="nav-links">
       <a href="#" onclick="filterCategory('anime')">ANIME</a>
       <a href="#" onclick="filterCategory('movie')">MOVIE</a>
@@ -224,6 +247,14 @@
   <script>
     function filterCategory(type) {
       alert(`Redirect to ${type} page coming soon...`);
+    }
+
+    function openSearchModal() {
+      document.getElementById("search-modal").style.display = "flex";
+    }
+
+    function closeSearchModal() {
+      document.getElementById("search-modal").style.display = "none";
     }
   </script>
 </body>
