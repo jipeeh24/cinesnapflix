@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>StreamVerse - Episode</title>
+  <title>StreamVerse - Watch Episode</title>
 
-  <!-- Google Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -30,7 +29,7 @@
 
     .navbar img {
       height: 60px;
-      border-radius: 50%;
+      border-radius: 12px;
       margin-right: auto;
     }
 
@@ -61,191 +60,79 @@
     }
 
     .container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      padding: 2rem;
-      justify-content: center;
-    }
-
-    .preview-image img {
-      width: 100%;
-      border-radius: 10px;
-      max-width: 300px;
-    }
-
-    .movie-info {
-      max-width: 600px;
-    }
-
-    .movie-info h1 {
-      margin-top: 0;
-      font-size: 2rem;
-    }
-
-    .episodes {
-      width: 100%;
       max-width: 900px;
       margin: 2rem auto;
-    }
-
-    .episode {
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid #333;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .episode:hover {
-      background-color: #1f1f1f;
-    }
-
-    .episode a {
-      color: #66ccff;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .player {
-      max-width: 900px;
-      margin: 2rem auto;
-      display: none;
+      padding: 1rem;
       text-align: center;
     }
 
-    video {
-      width: 100%;
-      border-radius: 10px;
-    }
-
-    #nowPlaying {
-      margin-bottom: 1rem;
-      font-weight: 500;
-      font-size: 1.2rem;
+    .container h1 {
+      font-size: 2rem;
       color: #00bcd4;
     }
 
-    .search-modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      z-index: 1000;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 3rem 1rem;
-      overflow-y: auto;
-    }
-
-    .search-modal .close {
-      align-self: flex-end;
-      margin-bottom: 2rem;
-      font-size: 2rem;
-      cursor: pointer;
-    }
-
-    #search-input {
+    iframe {
       width: 100%;
-      max-width: 500px;
-      padding: 0.75rem 1rem;
-      border-radius: 25px;
+      height: 500px;
       border: none;
-      outline: none;
-      font-size: 1rem;
-      background-color: #2a2a2a;
-      color: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    }
-
-    #search-results {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 2rem;
-      justify-content: center;
-    }
-
-    #search-results img {
-      width: 150px;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: transform 0.3s;
-    }
-
-    #search-results img:hover {
-      transform: scale(1.05);
+      border-radius: 10px;
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
-  <!-- Navbar -->
+
   <div class="navbar">
-    <img src="Cinesnapflix.png" alt="LOGO" />
+    <img src="Cinesnapflix.png" alt="LOGO">
     <div class="nav-links">
       <a href="index.html">HOME</a>
       <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()" />
     </div>
   </div>
 
-  <!-- Content -->
   <div class="container">
-    <div class="preview-image">
-      <img src="your-poster.jpg" alt="Movie Poster">
-    </div>
-
-    <div class="movie-info">
-      <h1>Movie Title</h1>
-      <p>This is a detailed description of the movie. Include storyline, genre, release year, director, and more.</p>
-    </div>
+    <h1 id="title">Loading...</h1>
+    <iframe id="video-player" allowfullscreen></iframe>
   </div>
 
-  <div class="episodes">
-    <h2>Episodes</h2>
-    <div class="episode"><a onclick="playEpisode('episode1.mp4')">Episode 1: The Beginning</a></div>
-    <div class="episode"><a onclick="playEpisode('episode2.mp4')">Episode 2: Rise of the Hero</a></div>
-    <div class="episode"><a onclick="playEpisode('episode3.mp4')">Episode 3: Final Showdown</a></div>
+  <!-- Search Modal (from index) -->
+  <div class="search-modal" id="search-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000000f2; z-index:999; justify-content:center; align-items:flex-start; flex-direction:column; padding:3rem 2rem;">
+    <span class="close" onclick="closeSearchModal()" style="font-size:2rem; align-self:flex-end; cursor:pointer;">&times;</span>
+    <input type="text" id="search-input" placeholder="Search for a movie or show..." style="width:100%; max-width:500px; padding:0.75rem 1rem; border-radius:25px; border:none; font-size:1rem; background:#2a2a2a; color:#fff; margin-bottom:2rem;" oninput="searchTMDB()" />
+    <div class="results" id="search-results" style="display:flex; flex-wrap:wrap; gap:1rem;"></div>
   </div>
 
-  <div class="player" id="videoPlayer">
-    <h2 id="nowPlaying">Now Playing</h2>
-    <video controls autoplay id="video">
-      <source src="" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
-
-  <!-- Search Modal -->
-  <div class="search-modal" id="search-modal">
-    <span class="close" onclick="closeSearchModal()">&times;</span>
-    <input type="text" id="search-input" placeholder="Search for a movie or show..." oninput="searchTMDB()" />
-    <div class="results" id="search-results"></div>
-  </div>
-
-  <!-- Scripts -->
-  <script src="js/home.js"></script>
   <script>
-    function playEpisode(file) {
-      const player = document.getElementById('videoPlayer');
-      const video = document.getElementById('video');
-      const nowPlaying = document.getElementById('nowPlaying');
+    const API_KEY = '7869f84a67666f62a89e8c97e7d10899';
 
-      video.src = file;
-      player.style.display = 'block';
-      nowPlaying.textContent = 'Now Playing: ' + file.replace('.mp4', '').replace(/_/g, ' ');
-      video.load();
-      video.play();
+    function getParams() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return {
+        id: urlParams.get('id'),
+        type: urlParams.get('type')
+      };
+    }
+
+    async function loadEpisodePage() {
+      const { id, type } = getParams();
+
+      const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}?api_key=${API_KEY}`);
+      const data = await res.json();
+
+      document.getElementById('title').textContent = data.title || data.name;
+
+      const iframe = document.getElementById('video-player');
+      iframe.src = `https://vidsrc.cc/v2/embed/${type}/${id}`;
     }
 
     function openSearchModal() {
-      document.getElementById("search-modal").style.display = "flex";
-      document.getElementById("search-input").focus();
+      document.getElementById('search-modal').style.display = 'flex';
+      document.getElementById('search-input').focus();
     }
 
     function closeSearchModal() {
-      document.getElementById("search-modal").style.display = "none";
-      document.getElementById("search-results").innerHTML = '';
+      document.getElementById('search-modal').style.display = 'none';
+      document.getElementById('search-results').innerHTML = '';
     }
 
     async function searchTMDB() {
@@ -255,7 +142,7 @@
         return;
       }
 
-      const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=7869f84a67666f62a89e8c97e7d10899&query=${encodeURIComponent(query)}`);
+      const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
       const data = await res.json();
       const container = document.getElementById('search-results');
       container.innerHTML = '';
@@ -264,14 +151,19 @@
         if (!item.poster_path) return;
         const img = document.createElement('img');
         img.src = `https://image.tmdb.org/t/p/w500${item.poster_path}`;
-        img.alt = item.title || item.name;
+        img.style.width = '150px';
+        img.style.borderRadius = '8px';
+        img.style.cursor = 'pointer';
         img.onclick = () => {
-          closeSearchModal();
-          alert("Redirect or open modal to play: " + (item.title || item.name));
+          const type = item.media_type === "movie" || item.title ? "movie" : "tv";
+          window.location.href = `episode.html?id=${item.id}&type=${type}`;
         };
         container.appendChild(img);
       });
     }
+
+    loadEpisodePage();
   </script>
+
 </body>
 </html>
