@@ -84,6 +84,7 @@ a {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   padding-bottom: 1rem;
+  position: relative;
 }
 
 .list img {
@@ -96,6 +97,29 @@ a {
 
 .list img:hover {
   transform: scale(1.05);
+}
+
+/* Left and Right Arrows */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+  font-size: 2rem;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.left-arrow {
+  left: 0;
+}
+
+.right-arrow {
+  right: 0;
 }
 
 /* Modal Styles */
