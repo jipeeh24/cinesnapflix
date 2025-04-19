@@ -19,7 +19,7 @@
 
     .navbar {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
       background-color: #1f1f1f;
@@ -28,15 +28,18 @@
       z-index: 100;
     }
 
-    .navbar img {
-      height: 40px;
-      margin-right: auto;
+    .logo-container img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      object-fit: cover;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
       gap: 2rem;
+      margin: 0 auto;
     }
 
     .nav-links a {
@@ -187,7 +190,9 @@
 <body>
   <!-- Navbar -->
   <div class="navbar">
-    <img src="Cinesnapflix.png" alt="LOGO" />
+    <div class="logo-container">
+      <img src="Cinesnapflix.png" alt="LOGO" />
+    </div>
     <div class="nav-links">
       <a href="index.html">HOME</a>
       <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()" />
