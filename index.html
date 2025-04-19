@@ -200,24 +200,28 @@
   </div>
 
   <!-- Modal -->
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2 id="modal-title"></h2>
-      <div class="stars" id="modal-rating"></div>
-      <p id="modal-description"></p>
-      <img id="modal-image" src="" alt="" style="width: 200px; border-radius: 10px;" />
-      <iframe id="modal-video" allowfullscreen></iframe>
-      <div class="server-selector">
-        <label for="server">Change Server:</label>
-        <select id="server" onchange="changeServer()">
-          <option value="vidsrc.cc">Vidsrc.cc</option>
-          <option value="vidsrc.me">Vidsrc.me</option>
-          <option value="player.videasy.net">Player.Videasy.net</option>
-        </select>
-      </div>
-    </div>
+  <div id="modal" class="modal">
+  <div class="modal-content">
+    <!-- Title -->
+    <h2 id="modal-title"></h2>
+    
+    <!-- Image -->
+    <img id="modal-image" src="" alt="" style="display: block; width: 200px; border-radius: 10px;">
+    
+    <!-- Description -->
+    <p id="modal-description"></p>
+    
+    <!-- Rating -->
+    <p id="modal-rating"></p>
+    
+    <!-- Video Player (Iframe) -->
+    <iframe id="modal-video" style="display: none;" frameborder="0"></iframe>
+    
+    <!-- Close Button -->
+    <span class="close" onclick="closeModal()">&times;</span>
   </div>
+</div>
+
 
   <!-- Search Modal -->
   <div class="search-modal" id="search-modal">
