@@ -7,8 +7,6 @@
 
   <!-- Google Fonts for modern UI -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
-  <!-- External CSS & Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
@@ -21,7 +19,7 @@
 
     .navbar {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       padding: 1rem 2rem;
       background-color: #1f1f1f;
@@ -32,12 +30,13 @@
 
     .navbar img {
       height: 40px;
+      margin-right: auto;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 2rem;
     }
 
     .nav-links a {
@@ -191,7 +190,6 @@
     <img src="Cinesnapflix.png" alt="LOGO" />
     <div class="nav-links">
       <a href="index.html">HOME</a>
-      <a href="#" onclick="filterCategory('movie')">MOVIE</a>
       <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()" />
     </div>
   </div>
@@ -244,10 +242,6 @@
   <script src="js/home.js"></script>
 
   <script>
-    function filterCategory(type) {
-      alert(`Redirect to ${type} page coming soon...`);
-    }
-
     function openSearchModal() {
       document.getElementById("search-modal").style.display = "flex";
     }
