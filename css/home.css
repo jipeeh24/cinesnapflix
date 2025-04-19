@@ -13,22 +13,42 @@
 .modal-content {
   background-color: #1e1e1e;
   color: white;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 10px;
   width: 90%;
-  max-width: 800px;
+  max-width: 700px;
   text-align: center;
-  max-height: 90vh; /* added for scrollable content */
-  overflow-y: auto; /* added for scrollable content */
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .modal-content iframe {
   width: 100%;
-  height: 250px; /* reduced height for better visibility */
+  height: 250px; /* Compact video height */
   border-radius: 8px;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   border: none;
 }
 
-.modal-content img {
-  margin-top: 1rem;
+.close {
+  font-size: 1.5rem;
+  float: right;
+  cursor: pointer;
+}
+
+/* Removed modal-content img and any description-related styling */
+
+/* Server Selector */
+.server-selector {
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
+}
+
+.server-selector select {
+  padding: 0.3rem 1rem;
+  margin-left: 0.5rem;
+  background-color: #2b2b2b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
