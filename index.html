@@ -1,239 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>StreamVerse</title>
-
-  <!-- Google Fonts for modern UI -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
-  <!-- External CSS & Icons -->
-  <link rel="stylesheet" href="css/home.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <script defer src="js/home.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      background-color: #121212;
-      font-family: 'Poppins', sans-serif;
-      color: #ffffff;
-    }
-
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background-color: #1f1f1f;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .navbar img {
-      height: 90px;
-      border-radius: 20px;
-      object-fit: cover;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .nav-links a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover {
-      color: #00bcd4;
-    }
-
-    .search-bar {
-      padding: 0.65rem 1.2rem;
-      font-size: 1rem;
-      width: 200px;
-      height: 40px;
-      border: none;
-      border-radius: 30px;
-      outline: none;
-      background-color: #2a2a2a;
-      color: white;
-      transition: all 0.3s ease;
-    }
-
-    .search-bar::placeholder {
-      color: #aaa;
-    }
-
-    .banner {
-      height: 300px;
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      align-items: center;
-      padding-left: 2rem;
-      font-size: 2rem;
-      font-weight: bold;
-      position: relative;
-    }
-
-    .banner:after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 10px;
-    }
-
-    .row {
-      padding: 1rem 2rem;
-    }
-
-    .list-container {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .list {
-      display: flex;
-      gap: 1rem;
-      overflow-x: hidden; /* Disable default horizontal scrolling */
-      width: 90%; /* Limit the width of the container */
-      margin: 0 auto; /* Center the list */
-    }
-
-    .list img {
-      height: 150px; /* Smaller images */
-      width: 100px; /* Adjust the width */
-      object-fit: cover;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .list img:hover {
-      transform: scale(1.1);
-      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .arrow {
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
-      padding: 0.5rem;
-      font-size: 1.5rem;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-      position: absolute;
-      top: 50%;
-      z-index: 10;
-      transition: background-color 0.3s;
-    }
-
-    .arrow:hover {
-      background-color: rgba(0, 0, 0, 0.7);
-    }
-
-    .left {
-      left: 10px;
-    }
-
-    .right {
-      right: 10px;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie & TV Show App</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
   <!-- Navbar -->
   <div class="navbar">
-    <img src="Cinesnapflix.png" alt="LOGO" />
+    <img src="logo.png" alt="Logo">
     <div class="nav-links">
-      <a href="#" onclick="filterCategory('anime')">ANIME</a>
-      <a href="#" onclick="filterCategory('movie')">MOVIE</a>
-      <a href="#" onclick="filterCategory('tv')">TV SERIES</a>
-      <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()" />
+      <a href="#">Home</a>
+      <a href="#">Movies</a>
+      <a href="#">TV Shows</a>
+      <a href="javascript:void(0)" onclick="openSearchModal()">Search</a>
     </div>
+    <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()">
   </div>
 
   <!-- Banner -->
   <div class="banner" id="banner">
-    <h1 id="banner-title"></h1>
+    <div id="banner-title"></div>
   </div>
 
-  <!-- Content Rows -->
+  <!-- Movies List -->
   <div class="row">
     <h2>Trending Movies</h2>
-    <div class="list-container">
-      <button class="arrow left" id="left-arrow-movies">&#8592;</button>
-      <div class="list" id="movies-list"></div>
-      <button class="arrow right" id="right-arrow-movies">&#8594;</button>
-    </div>
+    <div id="movies-list" class="list"></div>
   </div>
 
+  <!-- TV Shows List -->
   <div class="row">
     <h2>Trending TV Shows</h2>
-    <div class="list-container">
-      <button class="arrow left" id="left-arrow-tvshows">&#8592;</button>
-      <div class="list" id="tvshows-list"></div>
-      <button class="arrow right" id="right-arrow-tvshows">&#8594;</button>
-    </div>
+    <div id="tvshows-list" class="list"></div>
   </div>
 
+  <!-- Anime List -->
   <div class="row">
     <h2>Trending Anime</h2>
-    <div class="list-container">
-      <button class="arrow left" id="left-arrow-anime">&#8592;</button>
-      <div class="list" id="anime-list"></div>
-      <button class="arrow right" id="right-arrow-anime">&#8594;</button>
+    <div id="anime-list" class="list"></div>
+  </div>
+
+  <!-- Modal (For Movie/TV Show details) -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h2 id="modal-title"></h2>
+      <img id="modal-image" src="" alt="" style="width: 200px; border-radius: 10px;">
+      <p id="modal-description"></p>
+      <p id="modal-rating"></p>
+
+      <!-- Video Player (Iframe) -->
+      <iframe id="modal-video" frameborder="0" style="width: 100%; height: 400px; display: none;"></iframe>
+
+      <!-- Server Selector -->
+      <div class="server-selector">
+        <label for="server">Select Server: </label>
+        <select id="server">
+          <option value="vidsrc.cc">vidsrc.cc</option>
+          <option value="vidsrc.me">vidsrc.me</option>
+          <option value="player.videasy.net">player.videasy.net</option>
+        </select>
+      </div>
+
+      <!-- Close Button -->
+      <span class="close" onclick="closeModal()">&times;</span>
     </div>
   </div>
 
-  <!-- Modal -->
-  <div id="modal" class="modal">
-  <div class="modal-content">
-    <!-- Title -->
-    <h2 id="modal-title"></h2>
-    
-    <!-- Image -->
-    <img id="modal-image" src="" alt="" style="display: block; width: 200px; border-radius: 10px;">
-    
-    <!-- Description -->
-    <p id="modal-description"></p>
-    
-    <!-- Rating -->
-    <p id="modal-rating"></p>
-    
-    <!-- Video Player (Iframe) -->
-    <iframe id="modal-video" style="display: none;" frameborder="0"></iframe>
-    
-    <!-- Close Button -->
-    <span class="close" onclick="closeModal()">&times;</span>
-  </div>
-</div>
-
-
-  <!-- Search Modal -->
-  <div class="search-modal" id="search-modal">
-    <span class="close" onclick="closeSearchModal()">&times;</span>
-    <input type="text" id="search-input" placeholder="Search for a movie or show..." oninput="searchTMDB()" />
-    <div class="results" id="search-results"></div>
-  </div>
-
-  <script>
-    function filterCategory(type) {
-      alert(`Redirect to ${type} page coming soon...`);
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
