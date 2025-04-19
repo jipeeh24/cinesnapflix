@@ -42,10 +42,6 @@ function displayList(items, containerId) {
 
 function showDetails(item) {
   currentItem = item;
-  document.getElementById('modal-title').textContent = item.title || item.name;
-  document.getElementById('modal-description').textContent = item.overview;
-  document.getElementById('modal-image').src = `${IMG_URL}${item.poster_path}`;
-  document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(item.vote_average / 2));
   changeServer();
   document.getElementById('modal').style.display = 'flex';
 }
@@ -63,7 +59,8 @@ function changeServer() {
     embedURL = `https://player.videasy.net/${type}/${currentItem.id}`;
   }
 
-  document.getElementById('modal-video').src = embedURL;
+  const videoFrame = document.getElementById('modal-video');
+  videoFrame.src = embedURL;
 }
 
 function closeModal() {
