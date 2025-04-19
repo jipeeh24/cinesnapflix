@@ -4,7 +4,7 @@ const IMG_URL = 'https://image.tmdb.org/t/p/w500';
 let currentItem;
 
 async function fetchTrending(type) {
-  const res = await fetch(${BASE_URL}/trending/${type}/week?api_key=${API_KEY});
+  const res = await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`);
   const data = await res.json();
   return data.results;
 }
@@ -12,7 +12,7 @@ async function fetchTrending(type) {
 async function fetchTrendingAnime() {
   let allResults = [];
   for (let page = 1; page <= 3; page++) {
-    const res = await fetch(${BASE_URL}/trending/tv/week?api_key=${API_KEY}&page=${page});
+    const res = await fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}&page=${page}`);
     const data = await res.json();
     const filtered = data.results.filter(item =>
       item.original_language === 'ja' && item.genre_ids.includes(16)
@@ -24,7 +24,7 @@ async function fetchTrendingAnime() {
 
 function displayBanner(item) {
   const banner = document.getElementById('banner');
-  banner.style.backgroundImage = url(${IMG_URL}${item.backdrop_path});
+  banner.style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
   document.getElementById('banner-title').textContent = item.title || item.name;
 }
 
@@ -33,7 +33,7 @@ function displayList(items, containerId) {
   container.innerHTML = '';
   items.forEach(item => {
     const img = document.createElement('img');
-    img.src = ${IMG_URL}${item.poster_path};
+    img.src = `${IMG_URL}${item.poster_path}`;
     img.alt = item.title || item.name;
     img.onclick = () => showDetails(item);
     container.appendChild(img);
@@ -42,10 +42,6 @@ function displayList(items, containerId) {
 
 function showDetails(item) {
   currentItem = item;
-  document.getElementById('modal-title').textContent = item.title || item.name;
-  document.getElementById('modal-description').textContent = item.overview;
-  document.getElementById('modal-image').src = ${IMG_URL}${item.poster_path};
-  document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(item.vote_average / 2));
   changeServer();
   document.getElementById('modal').style.display = 'flex';
 }
@@ -56,14 +52,15 @@ function changeServer() {
   let embedURL = "";
 
   if (server === "vidsrc.cc") {
-    embedURL = https://vidsrc.cc/v2/embed/${type}/${currentItem.id};
+    embedURL = `https://vidsrc.cc/v2/embed/${type}/${currentItem.id}`;
   } else if (server === "vidsrc.me") {
-    embedURL = https://vidsrc.net/embed/${type}/?tmdb=${currentItem.id};
+    embedURL = `https://vidsrc.net/embed/${type}/?tmdb=${currentItem.id}`;
   } else if (server === "player.videasy.net") {
-    embedURL = https://player.videasy.net/${type}/${currentItem.id};
+    embedURL = `https://player.videasy.net/${type}/${currentItem.id}`;
   }
 
-  document.getElementById('modal-video').src = embedURL;
+  const videoFrame = document.getElementById('modal-video');
+  videoFrame.src = embedURL;
 }
 
 function closeModal() {
@@ -88,7 +85,7 @@ async function searchTMDB() {
     return;
   }
 
-  const res = await fetch(${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)});
+  const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
   const data = await res.json();
   const container = document.getElementById('search-results');
   container.innerHTML = '';
@@ -96,7 +93,7 @@ async function searchTMDB() {
   data.results.forEach(item => {
     if (!item.poster_path) return;
     const img = document.createElement('img');
-    img.src = ${IMG_URL}${item.poster_path};
+    img.src = `${IMG_URL}${item.poster_path}`;
     img.alt = item.title || item.name;
     img.onclick = () => {
       closeSearchModal();
