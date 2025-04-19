@@ -3,12 +3,14 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 const IMG_URL = 'https://image.tmdb.org/t/p/w500';
 let currentItem;
 
+// Fetch trending movies, tv shows, and anime
 async function fetchTrending(type) {
   const res = await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`);
   const data = await res.json();
   return data.results;
 }
 
+// Fetch trending anime (filtering by genre and language)
 async function fetchTrendingAnime() {
   let allResults = [];
   for (let page = 1; page <= 3; page++) {
@@ -22,12 +24,14 @@ async function fetchTrendingAnime() {
   return allResults;
 }
 
+// Display banner with random movie
 function displayBanner(item) {
   const banner = document.getElementById('banner');
   banner.style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
   document.getElementById('banner-title').textContent = item.title || item.name;
 }
 
+// Display list of items (movies, TV shows, anime)
 function displayList(items, containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = '';
@@ -40,12 +44,14 @@ function displayList(items, containerId) {
   });
 }
 
+// Show details modal for an item
 function showDetails(item) {
   currentItem = item;
   changeServer();
   document.getElementById('modal').style.display = 'flex';
 }
 
+// Change server for video embed
 function changeServer() {
   const server = document.getElementById('server').value;
   const type = currentItem.media_type === "movie" || currentItem.title ? "movie" : "tv";
@@ -63,21 +69,25 @@ function changeServer() {
   videoFrame.src = embedURL;
 }
 
+// Close modal when clicked
 function closeModal() {
   document.getElementById('modal').style.display = 'none';
   document.getElementById('modal-video').src = '';
 }
 
+// Open the search modal
 function openSearchModal() {
   document.getElementById('search-modal').style.display = 'flex';
   document.getElementById('search-input').focus();
 }
 
+// Close the search modal
 function closeSearchModal() {
   document.getElementById('search-modal').style.display = 'none';
   document.getElementById('search-results').innerHTML = '';
 }
 
+// Perform search using TMDB API
 async function searchTMDB() {
   const query = document.getElementById('search-input').value.trim();
   if (!query) {
@@ -103,6 +113,19 @@ async function searchTMDB() {
   });
 }
 
+// Close search modal if clicked outside search area
+document.addEventListener('click', function(event) {
+  const searchModal = document.getElementById('search-modal');
+  const searchInput = document.getElementById('search-input');
+  const searchBar = document.querySelector('.search-bar');
+
+  // Close search modal if the click is outside the search bar or modal
+  if (!searchModal.contains(event.target) && !searchInput.contains(event.target) && !searchBar.contains(event.target)) {
+    closeSearchModal();
+  }
+});
+
+// Initialize trending lists (movies, tv shows, anime)
 async function init() {
   const movies = await fetchTrending('movie');
   const tvShows = await fetchTrending('tv');
