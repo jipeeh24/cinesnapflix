@@ -42,11 +42,17 @@ function displayList(items, containerId) {
 
 function showDetails(item) {
   currentItem = item;
+  // Clear the description and image when showing the player
   document.getElementById('modal-title').textContent = item.title || item.name;
-  document.getElementById('modal-description').textContent = item.overview;
-  document.getElementById('modal-image').src = `${IMG_URL}${item.poster_path}`;
-  document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(item.vote_average / 2));
+  document.getElementById('modal-description').textContent = ''; // Clear description
+  document.getElementById('modal-image').style.display = 'none'; // Hide image
+  document.getElementById('modal-rating').innerHTML = ''; // Clear rating
   changeServer();
+  
+  // Show the player iframe
+  document.getElementById('modal-video').style.display = 'block';
+  
+  // Display the modal
   document.getElementById('modal').style.display = 'flex';
 }
 
@@ -63,13 +69,20 @@ function changeServer() {
     embedURL = `https://player.videasy.net/${type}/${currentItem.id}`;
   }
 
+  // Set the embed URL for the video iframe
   document.getElementById('modal-video').src = embedURL;
 }
 
 function closeModal() {
+  // Hide the modal and reset the iframe source to stop the video
   document.getElementById('modal').style.display = 'none';
-  document.getElementById('modal-video').src = '';
+  document.getElementById('modal-video').src = ''; // Stop video from playing
+  document.getElementById('modal-video').style.display = 'none'; // Hide video iframe
+  document.getElementById('modal-image').style.display = 'block'; // Show image back
+  document.getElementById('modal-description').textContent = currentItem.overview; // Show description again
+  document.getElementById('modal-rating').innerHTML = '★'.repeat(Math.round(currentItem.vote_average / 2)); // Show rating
 }
+
 
 function openSearchModal() {
   document.getElementById('search-modal').style.display = 'flex';
